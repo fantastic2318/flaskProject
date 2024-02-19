@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CatList</title>
+</head>
+<body>
+      <table border="1">
+          <tr>
+              <td>id</td>
+              <td>name</td>
+              <td>age</td>
+          </tr>
+
+          {% for cat in catlist %}
+              <tr>
+                  <td><a href="{{ url_for('cat_detail', id=cat.id)}}">{{ cat.id }}</a></td>
+                  <td>{{ cat.name }}</td>
+                  <td>{{ cat.age }}</td>
+              </tr>
+          {% endfor %}
+      </table>
+</body>
+</html>
