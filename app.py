@@ -5,17 +5,23 @@ from markupsafe import escape
 from Modules.Cat import Cat
 from Config.mysqlConfig import db
 from Modules.myDatabase import CatModel
+from flask_restx import Api, Resource, fields
 import pymysql
+from flasgger import Swagger, swag_from
+
 
 app = Flask(__name__)
 app.config.from_object('Config.config')
 db.init_app(app)
 with app.app_context():
     db.create_all() # 在调用create_all()之前，必须导入需要操作的模型，否则不会创建表
+swagger = Swagger(app)
 # 指定触发函数的URL路径
 # 浏览器中访问路径，一定要注意、如果route中没有以反斜杠结尾，访问时就不可以加
 # 如果以反斜杠结尾 那访问时加不加都可以
 # url_for 构建指定URL
+
+
 @app.route('/')
 def hello_world():  # put application's code here
     with app.test_request_context():
@@ -78,7 +84,7 @@ def show_id(id):
 #         name = request.form['name']
 #         catlist.append(Cat(id, age, name))
 #         return render_template('cat_list.html', catlist=catlist)
-
+@swag_from('./swagger_yaml/cat_add.yaml')
 @app.route('/cat_add', methods=['POST'])
 def cat_add():
     if not request.content_type == 'application/json':
@@ -228,5 +234,5 @@ def jsonify_demo():
 if __name__ == '__main__':
     # 终端 flask --app  app run
     # flask --app  app run -p 5001 --debug
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
