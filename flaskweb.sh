@@ -10,4 +10,4 @@ if [[ "$(docker inspect flaskweb 2> /dev/null | grep '"Name": "/flaskweb"')" != 
 	docker rm -f flaskweb
 fi
 
-docker run -d --restart=always -p 5000:5000 --name flaskweb flaskweb:$1
+docker run -d --restart=always -p 8085:8085 --name flaskweb flaskweb:$1
